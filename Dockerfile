@@ -7,10 +7,11 @@ RUN \
 # Install GD & xdebug (for code coverage)
     apt-get update \
     && apt-get install -y \
+        git \
         libjpeg62-turbo-dev \
         libpng-dev \
         libfreetype6-dev \
-        git \
+        mime-support \
         unzip \
 # Install composer first, to avoid overhead from xdebug
     && curl -s https://getcomposer.org/installer > /tmp/composer-setup.php \
@@ -27,14 +28,38 @@ RUN \
     && docker-php-ext-install -j$(nproc) gd \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
+# Install node & npm
+    && mkdir -p /opt/nvm \
+    && curl -s https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | NVM_DIR=/opt/nvm NVM_METHOD=script bash \
+    && . /opt/nvm/nvm.sh \
+    && nvm install 4 \
+    && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types \
+    && ln -s /bin/versions/node/v4.9.1/bin/node /usr/local/bin/node \
+    && ln -s /bin/versions/node/v4.9.1/bin/mocha /usr/local/bin/mocha \
 # cleanup to reduce already large image size
     && apt-get purge -y \
+        git \
+        git-man \
+        less \
+        libcurl3-gnutls \
+        liberror-perl \
+        libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
-        libfreetype6-dev \
-        git \
+        libpng-tools \
+        openssh-client \
+        rsync \
         unzip \
-    && rm -rf /var/lib/apt/lists/* /tmp/composer-setup.php
+        xauth \
+        zlib1g-dev \
+    && rm -rf /bin/.cache \
+        /bin/versions/node/v4.9.1/include \
+        /root/.npm \
+        /tmp/composer-setup.php \
+        /tmp/npm-* \
+        /tmp/pear \
+        /var/lib/apt/lists/* \
+        /var/log/*
 
 # mark dirs as volumes that need to be writable, allows running the container --read-only
 VOLUME /srv /tmp
