@@ -13,7 +13,7 @@ ln -s /bin/versions/node/v4.9.1/lib/node_modules /tmp/repo/js/node_modules
 cd /tmp/repo/js && mocha 2> /tmp/mocha.out > /tmp/mocha.out &
 
 # run phpunit (in foreground)
-cd /tmp/repo/tst && /opt/vendor/bin/phpunit
+cd /tmp/repo/tst && /usr/local/vendor/bin/phpunit
 
 # present mocha results, when done
 echo
