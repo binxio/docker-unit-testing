@@ -19,15 +19,13 @@ RUN \
     && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && cd /opt \
     && composer require phpunit/phpunit:^5.0 \
-# Configure & build GD & xdebug
+# Configure & build GD
     && docker-php-ext-configure gd \
         --enable-gd-native-ttf \
         --with-freetype-dir=/usr/include/ \
         --with-png-dir=/usr/include/ \
         --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
 # Install node & npm
     && mkdir -p /opt/nvm \
     && curl -s https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | NVM_DIR=/opt/nvm NVM_METHOD=script bash \
@@ -54,6 +52,8 @@ RUN \
         zlib1g-dev \
     && rm -rf /bin/.cache \
         /bin/versions/node/v4.9.1/include \
+        /opt/composer.* \
+        /opt/nvm \
         /root/.npm \
         /tmp/composer-setup.php \
         /tmp/npm-* \
