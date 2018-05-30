@@ -6,5 +6,7 @@ then
     exit 1
 fi
 
+cp -r /srv /tmp/repo
+
 # run phpunit
-cd /srv/tst && /opt/vendor/bin/phpunit
+cd /tmp/repo/tst && /opt/vendor/bin/phpunit

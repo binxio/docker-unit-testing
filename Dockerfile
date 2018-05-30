@@ -11,6 +11,7 @@ RUN \
         libpng-dev \
         libfreetype6-dev \
         git \
+        unzip \
 # Install composer first, to avoid overhead from xdebug
     && curl -s https://getcomposer.org/installer > /tmp/composer-setup.php \
     && [ "$(curl -s https://composer.github.io/installer.sig)" = "$(php -r "echo hash_file('SHA384', '/tmp/composer-setup.php');")" ] \
@@ -32,6 +33,7 @@ RUN \
         libpng-dev \
         libfreetype6-dev \
         git \
+        unzip \
     && rm -rf /var/lib/apt/lists/* /tmp/composer-setup.php
 
 # mark dirs as volumes that need to be writable, allows running the container --read-only
@@ -40,5 +42,7 @@ VOLUME /srv /tmp
 COPY unit-test.sh /usr/local/bin/
 
 WORKDIR /usr/local/bin
+
+USER nobody
 
 ENTRYPOINT ["unit-test.sh"]
