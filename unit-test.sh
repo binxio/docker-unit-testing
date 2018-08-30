@@ -1,16 +1,14 @@
 #!/bin/sh
-
-if [ ! -d /srv/tst ]
-then
-    echo "'tst' folder not found, are you sure you have attached your PrivateBin repository as a volume to /srv?" 1>&2
+[ ! -d /srv/tst ] && \
+    echo "'tst' folder not found, are you sure you have attached your PrivateBin git repository as a volume to /srv?" 1>&2 && \
     exit 1
-fi
 
 cp -r /srv /tmp/repo
-ln -s /bin/versions/node/v4.9.1/lib/node_modules /tmp/repo/js/node_modules
+[ -d /tmp/repo/js/node_modules ] && rm -rf /tmp/repo/js/node_modules
+ln -s /usr/lib/node_modules /tmp/repo/js/node_modules
 
 # run mocha (in background)
-cd /tmp/repo/js && mocha 2> /tmp/mocha.out > /tmp/mocha.out &
+cd /tmp/repo/js && mocha > /tmp/mocha.out 2>&1 &
 
 # run phpunit (in foreground)
 cd /tmp/repo/tst && /usr/local/vendor/bin/phpunit
