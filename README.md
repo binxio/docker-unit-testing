@@ -18,7 +18,16 @@ The parameters in detail:
 - `--read-only` - This image supports running in read-only mode. Only /tmp may be written into.
 - `-rm` - Remove the container after the run. This safes you doing a cleanup on your docker environment, if you run the image frequently.
 
-Note: Inside the container, the first thing that will be done is to copy your repository into /tmp/repo. The unit tests are then run in this copy. While this slows things done a bit, it further ensures, that a test script inside your repository can't accidentally delete objects in it.
+Note: Inside the container, the first thing that will be done is to copy your repository into /tmp/repo. The unit tests are then run in this copy. While this slows things done a bit, it ensures that a test script inside your repository can't accidentally delete objects in it.
+
+### Running just phpunit or mocha
+
+Optionally you can run just the PHP or Javascript unit tests by specifying the optional parameter:
+
+```bash
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing phpunit
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing mocha
+```
 
 ## Rolling your own image
 
@@ -32,4 +41,4 @@ Nodejs has to be built from source on Alpine, since it doesn't ship with standar
 
 ### Behind the scenes
 
-Since both unit test frameworks process the test cases linearly, both use only one CPU core. Nowadays most system have more then one, so the entrypoint script launces mocha in the background and phpunit in the foreground. On systems with 2 or more CPUs they can therefore run in parallel. On a recently modern amd64 CPU the phpunit run should take about 15 - 20s and mocha around 1.5 - 2min, hence its output gets displayed after phpunit.
+Since both unit test frameworks process the test cases linearly, both use only one CPU core. Nowadays most system have more then one, so the entrypoint script launces mocha in the background and phpunit in the foreground. On systems with 2 or more CPUs they can therefore run in parallel. On a recently modern amd64 CPU phpunit should take about 14s to run and mocha around 15s, hence its output gets displayed after phpunit.
