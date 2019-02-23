@@ -1,5 +1,4 @@
-# we use 7.0 for performance reasons, in TravisCI we launch tests for PHP 5.4, 5.5, 5.6, 7.0, 7.1 & 7.2 compatibility
-FROM php:7.0-cli-alpine
+FROM php:7.3-cli-alpine
 
 LABEL maintainer="support@privatebin.org"
 
