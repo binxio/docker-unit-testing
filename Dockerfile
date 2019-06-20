@@ -8,7 +8,7 @@ RUN \
         nodejs nodejs-npm python make g++ \
 # Install npm modules
     && npm config set unsafe-perm=true \
-    && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types node-webcrypto-ossl \
+    && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types node-webcrypto-ossl jsdom-url \
     && curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | sh \
     && node-prune /usr/lib/node_modules \
 # Install composer
