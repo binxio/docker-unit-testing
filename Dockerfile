@@ -1,11 +1,12 @@
-FROM php:7.3-cli-alpine
+FROM alpine:3.10.0
 
 LABEL maintainer="support@privatebin.org"
 
 RUN \
 # Install dependencies
-    apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev mailcap \
-        nodejs nodejs-npm python make g++ \
+    apk add --no-cache php7 php7-json php7-gd php7-opcache php7-pdo_sqlite \
+        php7-phar php7-openssl php7-mbstring php7-dom php7-xml php7-xmlwriter \
+        php7-tokenizer php7-fileinfo nodejs npm mailcap python curl make g++ \
 # Install npm modules
     && npm config set unsafe-perm=true \
     && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types node-webcrypto-ossl jsdom-url \
@@ -17,15 +18,8 @@ RUN \
     && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && cd /usr/local \
     && composer require phpunit/phpunit:^5.0 \
-# Configure & build GD
-    && docker-php-ext-configure gd \
-        --enable-gd-native-ttf \
-        --with-freetype-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd \
 # cleanup to reduce the already large image size
-    && apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev nodejs-npm python make g++ \
+    && apk del --no-cache php7-phar php7-openssl npm python curl make g++ \
     && rm -rf /bin/.cache \
         /bin/node-prune \
         /etc/mailcap \
