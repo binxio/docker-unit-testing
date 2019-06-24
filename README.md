@@ -29,6 +29,13 @@ docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing phpu
 docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing mocha
 ```
 
+You may also limit the test execution to a single test file to speed up repeats
+
+```bash
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing phpunit ConfigurationTest.php
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing mocha test/Helper.js
+```
+
 ## Rolling your own image
 
 To reproduce the image, run:
