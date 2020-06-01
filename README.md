@@ -44,8 +44,6 @@ To reproduce the image, run:
 docker build -t privatebin/unit-testing .
 ```
 
-Nodejs has to be built from source on Alpine, since it doesn't ship with standard C++ libraries. Grab a cup of tea.
-
 ### Behind the scenes
 
-Since both unit test frameworks process the test cases linearly, both use only one CPU core. Nowadays most system have more then one, so the entrypoint script launces mocha in the background and phpunit in the foreground. On systems with 2 or more CPUs they can therefore run in parallel. On a recently modern amd64 CPU phpunit should take about 14s to run and mocha around 15s, hence its output gets displayed after phpunit.
+Since both unit test frameworks process the test cases linearly, both use only one CPU core. Nowadays most system have more then one, so the entrypoint script launches mocha in the background and phpunit in the foreground. On systems with 2 or more CPUs they can therefore run in parallel. On a recently modern amd64 CPU phpunit should take about 14s to run and mocha around 45s, hence its output gets displayed after phpunit.
