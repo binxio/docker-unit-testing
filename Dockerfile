@@ -9,7 +9,7 @@ RUN \
         php7-tokenizer php7-fileinfo nodejs npm mailcap \
 # Install npm modules
     && npm config set unsafe-perm=true \
-    && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types @peculiar/webcrypto jsdom-url \
+    && npm install -g mocha jsverify jsdom@9 jsdom-global@2 mime-types @peculiar/webcrypto jsdom-url fake-indexeddb \
     && wget -qO- https://install.goreleaser.com/github.com/tj/node-prune.sh | sh \
     && node-prune /usr/lib/node_modules \
 # Install composer
