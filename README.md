@@ -9,7 +9,7 @@ This repository contains the Dockerfile and resources needed to create a docker 
 Assuming you have docker successfully installed and internet access, you can fetch and run the image from the docker hub like this:
 
 ```bash
-docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro --tmpfs /tmp privatebin/unit-testing
 ```
 
 The parameters in detail:
@@ -25,15 +25,15 @@ Note: Inside the container, the first thing that will be done is to copy your re
 Optionally you can run just the PHP or Javascript unit tests by specifying the optional parameter:
 
 ```bash
-docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing phpunit
-docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing mocha
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro --tmpfs /tmp privatebin/unit-testing phpunit
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro --tmpfs /tmp privatebin/unit-testing mocha
 ```
 
 You may also limit the test execution to a single test file to speed up repeats
 
 ```bash
-docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing phpunit ConfigurationTest.php
-docker run --rm --read-only -v ~/PrivateBin:/srv:ro privatebin/unit-testing mocha test/Helper.js
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro --tmpfs /tmp privatebin/unit-testing phpunit ConfigurationTest.php
+docker run --rm --read-only -v ~/PrivateBin:/srv:ro --tmpfs /tmp privatebin/unit-testing mocha test/Helper.js
 ```
 
 ## Rolling your own image
