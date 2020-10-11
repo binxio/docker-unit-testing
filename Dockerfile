@@ -17,7 +17,7 @@ RUN \
     && [ "$(wget -qO- https://composer.github.io/installer.sig)" = "$(php -r "echo hash_file('SHA384', '/tmp/composer-setup.php');")" ] \
     && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && cd /usr/local \
-    && composer require phpunit/phpunit:^5.0 \
+    && composer require phpunit/phpunit:^9 \
 # cleanup to reduce the already large image size
     && apk del --no-cache php7-phar php7-openssl npm \
     && rm -rf /bin/.cache \
@@ -25,8 +25,9 @@ RUN \
         /etc/mailcap \
         /root/.??* \
         /tmp/* \
-        /usr/local/composer.* \
         /usr/lib/node_modules/npm \
+        /usr/local/bin/composer \
+        /usr/local/composer.* \
         /var/lib/apt/lists/* \
         /var/log/*
 
