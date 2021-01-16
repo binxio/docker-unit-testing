@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.13
 
 LABEL maintainer="support@privatebin.org"
 
@@ -14,7 +14,7 @@ RUN \
     && node-prune /usr/lib/node_modules \
 # Install composer modules
     && cd /usr/local \
-    && composer require phpunit/phpunit:^9 \
+    && composer require phpunit/phpunit:^5.0 \
 # cleanup to reduce the already large image size
     && apk del --no-cache composer npm \
     && rm -rf /bin/.cache \
