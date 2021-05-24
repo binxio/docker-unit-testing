@@ -16,9 +16,19 @@ cd /tmp/repo/js
 # …(in background)
 [ -z "$COMMAND" ] && mocha -c > /tmp/mocha.out 2>&1 &
 
-# run phpunit (in foreground)
-cd /tmp/repo/tst
-[ "$COMMAND" = phpunit -o -z "$COMMAND" ] && /usr/local/vendor/bin/phpunit --no-coverage --colors=always "$@"
+if [ "$COMMAND" = phpunit -o -z "$COMMAND" ]; then
+        # start fake GCS server
+	/usr/local/bin/fake-gcs-server \
+	  -host localhost \
+	  -filesystem-root /tmp/gcs &
+        GCS_ID=$!
+
+	# run phpunit (in foreground)
+	cd /tmp/repo/tst
+	/usr/local/vendor/bin/phpunit --no-coverage --colors=always "$@"
+        # stop the server again
+        kill -15 $GCS_ID
+fi
 
 # present mocha results, when done
 [ -z "$COMMAND" ] && wait && cat /tmp/mocha.out
